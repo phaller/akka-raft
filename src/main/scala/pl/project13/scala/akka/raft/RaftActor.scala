@@ -111,7 +111,7 @@ abstract class RaftActor extends Actor with PersistentFSM[RaftState, Meta, Domai
       stopHeartbeat()
   }
 
-  initialize() // akka internals; MUST be last call in constructor
+  //initialize() // akka internals; MUST be last call in constructor
 
   // helpers -----------------------------------------------------------------------------------------------------------
 

@@ -17,7 +17,8 @@ object ApplicationBuild extends Build {
     .configs(MultiJvm)
     .settings(multiJvmSettings: _*)
     .settings(
-      libraryDependencies ++= generalDependencies
+      libraryDependencies ++= generalDependencies,
+      ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
     )
 
   lazy val multiJvmSettings = SbtMultiJvm.multiJvmSettings ++ Seq(
@@ -43,6 +44,8 @@ object Dependencies {
 
       "com.typesafe.akka" %% "akka-cluster"     % akkaVersion,
       "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+
+      "com.typesafe.akka" %% "akka-persistence-cassandra" % "0.29",
 
       "com.typesafe.akka" %% "akka-testkit"            % akkaVersion % "test",
       "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion % "test",
