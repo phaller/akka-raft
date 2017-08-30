@@ -17,6 +17,11 @@ private[raft] trait Candidate {
       sender() ! LeaderIs(None, Some(msg))
       stay()
 
+    case Event(msg: LeaderIs, m: Meta) =>
+      log.info("!!! Candidate got {} from client; begin new election", msg)
+      m.clusterSelf ! BeginElection
+      stay() applying StartElectionEvent()
+
     // election
     case Event(msg @ BeginElection, m: Meta) =>
       if(raftConfig.publishTestingEvents) context.system.eventStream.publish(ElectionStarted(m.currentTerm, self))
